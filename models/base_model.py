@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 
-
+time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
 class BaseModel:
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
@@ -15,12 +15,17 @@ class BaseModel:
             self.updated_at = datetime.now()
             storage.new(self)
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
             self.__dict__.update(kwargs)
+            if 'updated_at' not in kwargs.keys():
+                setattr(self, 'updated_at', datetime.now())
+            if 'created_at' not in kwargs.keys():
+                setattr(self, 'created_at', datetime.now())
+            if kwargs['created_at'] is None:
+                updated_at = datetime.strptime(kwargs['updated_at'], time_fmt)
+            if kwargs['updated_at'] is None:
+                self.created_at = datetime.strptime(kwargs['created_at'], time_fmt)
 
     def __str__(self):
         """Returns a string representation of the instance"""
