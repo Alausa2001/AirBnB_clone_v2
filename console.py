@@ -129,13 +129,13 @@ class HBNBCommand(cmd.Cmd):
             for a in attr:
                 split_index = a.index('=')
                 key = a[:split_index]
-                value = a[split_index + 1:]
-                try:
-                    value = int(value)
-                except Exception:
-                    pass
-                diction[key] = eval(value)
-                print(diction)
+                value = eval(a[split_index + 1:])
+                if type(value) is str:
+                    value = value.replace('_', ' ')
+                if type(value) is str and value.find('_'):
+                    value = value.replace('_', ' ')
+                diction[key] = value
+                # print(diction)
         except ValueError:
             pass
         new_instance = HBNBCommand.classes[arg[0]](**diction)
