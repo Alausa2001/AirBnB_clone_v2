@@ -40,5 +40,19 @@
         "updated_at": "2022-10-12T00:08:59.234932",
         "name": "Alausa",
         "__class__": "State"
+    },
+    "State.6472f578-62e0-45da-9084-fd13f8f629ef": {
+        "id": "6472f578-62e0-45da-9084-fd13f8f629ef",
+        "created_at": "2022-10-12T14:44:17.623555",
+        "updated_at": "2022-10-12T14:44:17.623203",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.a8f44cc7-b58d-4be0-ab9f-87216201c499": {
+        "id": "a8f44cc7-b58d-4be0-ab9f-87216201c499",
+        "created_at": "2022-10-13T02:53:28.699042",
+        "updated_at": "2022-10-13T02:53:28.699453",
+        "name": "California",
+        "__class__": "State"
     }
 }
