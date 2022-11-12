@@ -42,14 +42,14 @@ class DBStorage:
             obj_ins = self.__session.query(cls).all()
             for obj in obj_ins:
                 key = '.'.join([obj.__class__.__name__, obj.id])
-                diction[key] = value
+                diction[key] = obj
         else:
             all_cls = [BaseModel, User, State, City, Amenity, Place, Review]
             for cls in all_cls:
                 obj_ins = self.__session.query(cls).all()
-                for obj in obj_ins:
+                for obj in obj_ins():
                     key = '.'.join([obj.__class__.__name__, obj.id])
-                    diction[key] = value
+                    diction[key] = obj
         return (diction)
 
     def new(self, obj):
@@ -69,5 +69,9 @@ class DBStorage:
         """creates tables and session"""
         Base.metadata.create_all(self.__engine)
         ses_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        safeSession = scoped_session(ses_factory)
-        self.__session = safeSession()
+        Session = scoped_session(ses_factory)
+        self.__session = Session
+
+    def close(self):
+        """calls remove()(sqlalchemy) on __session"""
+        self.__session.remove()
