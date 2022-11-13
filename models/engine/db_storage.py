@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """adding a database"""
 
-
+from sqlalchemy.sql import text
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from os import getenv
@@ -39,6 +39,7 @@ class DBStorage:
         """query"""
         diction = dict()
         if cls is not None:
+            cls = eval(cls)
             obj_ins = self.__session.query(cls).all()
             for obj in obj_ins:
                 key = '.'.join([obj.__class__.__name__, obj.id])

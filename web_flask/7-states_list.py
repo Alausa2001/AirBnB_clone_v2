@@ -15,20 +15,24 @@ After each request you must remove the current SQLAlchemy Session:
 from flask import Flask, render_template
 from models import storage
 
-
 app = Flask(__name__)
 
+
 @app.route('/states_list', strict_slashes=False)
-def all_states():
+def states_list():
     """display a HTML page with the states listed in alphabetical order"""
-    states = storage.all("State")
-    #print(states)
-    return (render_template('7-states_list.html', states=states))
+    all_states = storage.all("State")
+    states = list()
+    for state in all_states.values():
+        states.append(state)
+    return render_template('7-states_list.html', states=states)
+
 
 @app.teardown_appcontext
-def close_conn(exception):
-    """closes the storage connection on teardown"""
+def teardown_db(exception):
+    """closes the storage on teardown"""
     storage.close()
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
