@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from models.state import State
+
+
+states = {'State': State}
 
 
 class FileStorage:
@@ -16,7 +20,7 @@ class FileStorage:
             for key, value in diction.items():
                 cls_id = key.strip('"')
                 clas, id = cls_id.split('.')
-                if (clas == cls.__name__):
+                if (clas == states[cls].__name__):
                     clas_type[key] = value
             return (clas_type)
         else:
